@@ -9,6 +9,22 @@
   <script src="bootstrap.min.js"></script>
 </head>
 <body>
+<?php
+//verification of access permission
+     include("db.php");
+
+      $role_id= $_SESSION['role_id'];
+      $sql="select r.role_name, p.perm_desc from roles r left join role_perm rp on r.role_id = rp.role_id right join permissions p on p.perm_id = rp.perm_id WHERE r.role_id ='$role_id' ";
+      $result=$conn->query($sql);
+ 
+      $perm_decs=array();
+      while($resultx=$result->fetch_assoc()){
+        array_push($perm_decs,$resultx[perm_desc]);
+       }
+      if (in_array("add articles", $perm_decs)) {
+
+?>
+
 
 <div class="container">
   
@@ -44,6 +60,13 @@
   </div>
   
 </div>
+<?php
+}
+else
+echo "You do not have permission to access this page";
+
+
+?>
 
 </body>
 </html>
