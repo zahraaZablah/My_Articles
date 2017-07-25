@@ -51,12 +51,21 @@ session_start();
             	            } 
             	        ?>
             	       </li>	
-		                <li><a href="index.php?page=feed"  class="current">Home</a></li>
+		                <li><a href="index.php?page=feed"  <?=echocurrentClassIfRequestMatches("index.php?page=feed")?>>Home</a></li>
         		        
 
 
 
      <?php
+     
+     
+     function echocurrentClassIfRequestMatches($requestUri)
+{
+    $current_file_name = basename($_SERVER['REQUEST_URI']);
+
+    if ($current_file_name == $requestUri)
+        echo 'class="current"';
+}
              
    //get permissions by role_id
       include("db.php");   
@@ -74,20 +83,28 @@ session_start();
   
       if (in_array("add roles", $perm_decs)) {
 
-           echo' <li><a href="index.php?page=role_perm"  >Add Roles</a></li>';
+           echo' <li><a href="index.php?page=role_perm" ';
+           echocurrentClassIfRequestMatches("index.php?page=role_perm");
+         echo'>Add Roles</a></li>';
         }
       
        if (in_array("add users", $perm_decs)) {
-            echo' <li><a href="index.php?page=users"  >Add Users</a></li>';
+            echo' <li><a href="index.php?page=users" ';
+            echocurrentClassIfRequestMatches("index.php?page=users");
+
+           echo' >Add Users</a></li>';
             }
             
         echo'<li><a href="index.php?page=logout" >Logout</a></li>';
      
          
        } //Not a user
-       else
-        echo'<li><a href="index.php?page=login" >Login</a></li>';
+       else {
+        echo'<li><a href="index.php?page=login"';
+        echocurrentClassIfRequestMatches("index.php?page=login");
 
+       echo'  >Login</a></li>';
+}
                      ?>
     
          </ul>   
