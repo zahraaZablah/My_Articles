@@ -78,7 +78,7 @@ echo'</tr>
    <td></td>
 </tr>
 <?php
-$rp="SELECT r.role_name, r.role_id, GROUP_CONCAT( p.perm_desc ) FROM roles r LEFT JOIN role_perm rp ON r.role_id = rp.role_id RIGHT JOIN permissions p ON p.perm_id = rp.perm_id GROUP BY r.role_id";
+$rp="SELECT r.role_name, r.role_id, GROUP_CONCAT( p.perm_desc ), GROUP_CONCAT( p.perm_id ) FROM roles r LEFT JOIN role_perm rp ON r.role_id = rp.role_id RIGHT JOIN permissions p ON p.perm_id = rp.perm_id GROUP BY r.role_id";
 $resultrp=$conn->query($rp);
  $count=1;
 while($resultrpx=$resultrp->fetch_assoc()){
@@ -89,11 +89,17 @@ while($resultrpx=$resultrp->fetch_assoc()){
  echo "<td>".$count."</td>";
   echo "<td>".$resultrpx[role_name]."</td>";
   echo "<td>".$resultrpx['GROUP_CONCAT( p.perm_desc )']."</td>";
+  $psid=$resultrpx['GROUP_CONCAT( p.perm_id )'];
   //action col
   echo "<td>";
   echo "<a href='deleteRole.php?id=$resultrpx[role_id]' title='Delete role'>";
 echo '<img src="images/delete.png" width=15 border=0/>';
   echo "</a>";
+  echo "&nbsp;&nbsp";
+    echo "<a href='index.php?page=updateRole&id=$resultrpx[role_id]&psid=$psid' title='Update role'>";
+echo '<img src="images/update.png" width=15 border=0/>';
+  echo "</a>";
+
 echo "&nbsp;&nbsp;&nbsp;   ";
   echo "</td>";
   
