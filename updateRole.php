@@ -13,6 +13,11 @@ Update Roles
 </font>
 <hr width="80%" align=center>
 <?php
+ 
+ include("access_perm.php");
+  $p="add roles";
+      if (Access_perm($p)){
+
 $roleid=$_GET['id'];
 $psid=$_GET['psid'];
 
@@ -58,7 +63,10 @@ echo'</tr>
 
 </table>
 </form>';
-    
+    }
+    else
+   echo "You do not have a permission to access this page";
+
 
 ?>
 
