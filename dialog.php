@@ -105,7 +105,7 @@
 <?php
   }
 else
-echo "You do not have a permission to access this page";
+echo "You do not have permission to access this page";
 
 ?>
 </body>
