@@ -9,6 +9,11 @@
 <body>
 
 <?php
+
+include("access_perm.php");
+  $p="delete articles";
+    if (Access_perm($p)){
+
  
 $id1=$_GET["id"];
  
@@ -17,11 +22,13 @@ include("db.php");
  $sql="delete from articles where id='$id1'";
  $conn->query($sql);
 
+    }
+else
+echo "You do not have a permission to access this page";
+
 
 ?>
- <meta http-equiv="refresh" content="0;url=index.php?page=feed"/>
-
-
+ <meta http-equiv="refresh" content="1;url=index.php?page=feed"/> 
 </body>
 
 </html>
