@@ -11,18 +11,10 @@ Add Users
 </font>
 <hr width="80%" align=center>
 <?php
-//verification of access permission
-     include("db.php");
 
-      $role_id= $_SESSION['role_id'];
-      $sql="select r.role_name, p.perm_desc from roles r left join role_perm rp on r.role_id = rp.role_id right join permissions p on p.perm_id = rp.perm_id WHERE r.role_id ='$role_id' ";
-      $result=$conn->query($sql);
- 
-      $perm_decs=array();
-      while($resultx=$result->fetch_assoc()){
-        array_push($perm_decs,$resultx[perm_desc]);
-       }
-      if (in_array("add users", $perm_decs)) {
+   include("access_perm.php");
+    $p="add users";
+      if (Access_perm($p)){
 
 ?>
 <form method="post" action="insertuser.php">
