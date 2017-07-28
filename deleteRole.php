@@ -8,18 +8,24 @@
 
 <body>
 <?php
- 
+ include("access_perm.php");
+  $p="add roles";
+    if (Access_perm($p)){
+
 $id1=$_GET["id"];
  
 // connect to database
 include("db.php");
  $sql="delete from roles where role_id='$id1'";
  $conn->query($sql);
+     }
+else
+echo "You do not have a permission to access this page";
+
 
 ?>
 
  <meta http-equiv="refresh" content="0;url=index.php?page=role_perm"/>
-
 </body>
 
 </html>
