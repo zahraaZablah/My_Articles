@@ -10,18 +10,10 @@
 </head>
 <body>
 <?php
-//verification of access permission
-     include("db.php");
 
-      $role_id= $_SESSION['role_id'];
-      $sql="select r.role_name, p.perm_desc from roles r left join role_perm rp on r.role_id = rp.role_id right join permissions p on p.perm_id = rp.perm_id WHERE r.role_id ='$role_id' ";
-      $result=$conn->query($sql);
- 
-      $perm_decs=array();
-      while($resultx=$result->fetch_assoc()){
-        array_push($perm_decs,$resultx[perm_desc]);
-       }
-      if (in_array("add articles", $perm_decs)) {
+//include("access_perm.php");
+  $p="add articles";
+      if (Access_perm($p)){
 
 ?>
 
@@ -45,9 +37,59 @@
         <div class="modal-body">
           <p>
        <!-- post structure -->
-         <?php
-         include("post.php");
-         ?> 
+         
+         
+<!-- post body -->
+
+<form method="post" action="insertpost.php">
+<table border="0" align="center" width="500">
+
+<tr>
+  <td>Title</td>
+  <td><input type="text" name="title" size="30"/></td>
+  <td></td>
+</tr>
+</br>
+<tr>
+
+  <td> </td>
+  <td><textarea name="post" cols="50" rows="5"> </textarea></td>
+  <td></td>
+</tr>
+
+<tr> 
+  <td></td>
+   <td colspan="2">categories
+    <select name="categories" >
+    <option>Computers and Electronics </option>
+    <option>Arts and Entertainment </option>
+    <option>Cars and other vehicles</option>
+    <option>Education and Communications</option>
+    <option>Family Life</option>
+    <option>Finance and Business</option>
+    <option>Health</option>
+    <option>Hobbies and Crafts</option>
+    <option>Holidays and Traditions</option>
+    <option>Home and Garden</option>
+    <option>Personal Care and Style</option>
+    <option>Pets and Animals</option>
+    <option>Philosophy and Religion</option>
+    <option>Relationships</option>
+    <option>Travel</option>
+    <option>Work World</option>
+    <option>Youth</option>
+    <option>Other</option>
+
+  </select></td>
+
+</tr>
+<tr>
+  <td colspan="2" align="center"><input type="submit" value="Post"/></td>
+</tr>
+</body>
+</table>
+</form>
+         
                   
           </p>
         </div>
@@ -61,12 +103,10 @@
   
 </div>
 <?php
-}
+  }
 else
-echo "You do not have permission to access this page";
-
+echo "You do not have a permission to access this page";
 
 ?>
-
 </body>
 </html>
