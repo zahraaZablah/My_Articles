@@ -7,6 +7,15 @@
 </head>
 <body>
 <?php
+
+
+include("access_perm.php");
+  $p="update articles";
+      if (Access_perm($p)){
+
+
+
+
 $id1=$_GET["id"];
 include("db.php");
 $sql="select * from articles where id='$id1'";
@@ -64,6 +73,12 @@ $resultx=$result->fetch_assoc();
 
 </table>
 </form>
+<?php
+}
+ else
+echo "You do not have a permission to access this page";
+
+ ?>
 
 </body>
 
