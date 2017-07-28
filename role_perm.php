@@ -10,18 +10,10 @@ Add Roles
 </font>
 <hr width="80%" align=center>
 <?php
-  include("db.php");
- //verification of access permission
-      $role_id= $_SESSION['role_id'];
-      $sql="select r.role_name, p.perm_desc from roles r left join role_perm rp on r.role_id = rp.role_id right join permissions p on p.perm_id = rp.perm_id WHERE r.role_id ='$role_id' ";
-      $result=$conn->query($sql);
- 
-      $perm_decs=array();
-      while($resultx=$result->fetch_assoc()){
-        array_push($perm_decs,$resultx[perm_desc]);
-       }
-      if (in_array("add roles", $perm_decs)) {
 
+include("access_perm.php");
+  $p="add roles";
+      if (Access_perm($p)){
 
 ?>
 
@@ -92,7 +84,7 @@ while($resultrpx=$resultrp->fetch_assoc()){
   $psid=$resultrpx['GROUP_CONCAT( p.perm_id )'];
   //action col
   echo "<td>";
-  echo "<a href='deleteRole.php?id=$resultrpx[role_id]' title='Delete role'>";
+  echo "<a href='index.php?page=deleteRole&id=$resultrpx[role_id]' title='Delete role'>";
 echo '<img src="images/delete.png" width=15 border=0/>';
   echo "</a>";
   echo "&nbsp;&nbsp";
