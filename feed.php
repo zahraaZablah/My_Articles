@@ -14,22 +14,17 @@ session_start();
 <body>
 </br>
    <?php
- include("db.php");
-
-   //get permissions by role_id
          
     if(isset($_SESSION['account'])){
-      $role_id= $_SESSION['role_id'];
-      $sql="select r.role_name, p.perm_desc from roles r left join role_perm rp on r.role_id = rp.role_id right join permissions p on p.perm_id = rp.perm_id WHERE r.role_id ='$role_id' ";
-      $result=$conn->query($sql);
- 
-      $perm_decs=array();
-      while($resultx=$result->fetch_assoc()){
-        array_push($perm_decs,$resultx[perm_desc]);
-       }
-      if (in_array("add articles", $perm_decs)) {
-                    include("dialog.php");
+    
+       include("access_perm.php");
+       
+        $p="add articles";
+         if (Access_perm($p)){
+      
+            include("dialog.php");
          }
+         
    } //Not a user, already has the view permission only
      
   
@@ -93,18 +88,19 @@ session_start();
                     ;
           //delete          
           if(isset($_SESSION['account'])){
-                    
-         if (in_array("delete articles", $perm_decs)) {             
-                     echo "<a href='deletepost.php?id=$id'>".
+             $p2="delete articles";
+                if (Access_perm($p2)){          
+                     echo "<a href='index.php?page=deletepost&id=$id'>".
                     "<img src='images/delete.png' align='right' style='height:20px;padding-bottom:3px' > </img></a>";
                    } 
           //update
-           if (in_array("update articles", $perm_decs)) {         
+             $p3="update articles";
+                 if (Access_perm($p3)){ 
                     echo "<a href='index.php?page=updatepost&id=$id'>".
                     "<img src='images/update.png' align='right' style='height:20px;padding-bottom:3px' > </img></a> ";
                     }   
                        
-          }//not au user        
+          }//not a user        
                     echo "</span>"
                     ."</div>"
                     ."</div>";
